@@ -1,7 +1,23 @@
+/**
+ * This script is focused on the HTML / displaying of data to the page
+ */
+
 const activeChatSelect = document.getElementById('chat-dropdown');
 
 export default {
-    populateActiveChat(chatArr){
-        
-    }
+    populateActiveChatSelect(chatsArr){
+
+    },
+
+    displayTranscript(messagesArr){
+
+    },
+
+    clearActiveChat(){
+
+    },
+
+    addChat(sender, message){
+
+    },
 }

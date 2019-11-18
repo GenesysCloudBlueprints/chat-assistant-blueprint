@@ -1,11 +1,14 @@
 /**
- * This file manages the singleton channel that listens to chat events.
+ * This file manages the channel that listens to chat events.
  */
 const platformClient = require('platformClient');
 const notificationsApi = new platformClient.NotificationsApi();
 
 let channel = {};
 let ws = null;
+
+// Object that will contain the subscription topic as key and the
+// callback function as the value
 let subscriptionMap = {
     'channel.metadata': () => {
         console.log('Notification heartbeat.');
@@ -13,7 +16,8 @@ let subscriptionMap = {
 };
 
 /**
- * Callback function for notications event-handling
+ * Callback function for notications event-handling.
+ * It will reference the subscriptionMap to determine what function to run
  * @param {Object} event 
  */
 function onSocketMessage(event){
@@ -41,8 +45,8 @@ export default {
 
     /**
      * Add a subscription to the channel
-     * @param {String} topic 
-     * @param {Function} callback 
+     * @param {String} topic PureCloud notification topic string
+     * @param {Function} callback callback function to fire when the event occurs
      */
     addSubscription(topic, callback){
         let body = [{'id': topic}]
