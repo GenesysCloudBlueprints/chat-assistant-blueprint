@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chat Listener Sample</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+  <link rel="stylesheet" href="./styles/style.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+  <script src="https://sdk-cdn.mypurecloud.com/javascript/62.0.0/purecloud-platform-client-v2.min.js"></script>
+
+  <script type="module" src="./scripts/main.js"></script>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <div class="field">
+      <label class="label">Active Chats:</label>
+      <div class="control has-icons-left">
+        <div class="select is-medium">
+          <select id="chat-dropdown" value="hello">
+            <option selected disabled hidden>Select Chat</option>
+            <option>Select dropdown</option>
+            <option>With options</option>
+          </select>
+        </div>
+        <span class="icon is-medium is-left">
+          <i class="far fa-comment-dots"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
