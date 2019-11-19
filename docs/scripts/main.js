@@ -28,10 +28,19 @@ let onMessage = (data) => {
             let senderId = data.eventBody.sender.id;
 
             console.log(message);
+
+            var chatMsg = document.createElement("p");
+            chatMsg.textContent = message;
+
+            var container = document.createElement("div");
+            container.appendChild(chatMsg);
+            container.className = "chat-message";
+
+            document.getElementById("tabcontents").appendChild(container);
+
             break;
     }
 };
-
 
 /**
  * Get current active chat conversations
@@ -53,8 +62,27 @@ function getActiveChats(){
  */
 function getChatTranscript(conversationId){
     return new Promise((resolve, reject) => {
-        conversationsApi.conversationsApi(conversationId)
+        conversationsApi.getConversationsChatMessages(conversationId)
         .then((data) => {
+            const myNode = document.getElementById("tabcontents");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+
+            (data.entities).forEach(function(entity) {
+                if(entity.hasOwnProperty("body")) {
+                    let message = entity.body;
+
+                    var chatMsg = document.createElement("p");
+                    chatMsg.textContent = message;
+
+                    var container = document.createElement("div");
+                    container.appendChild(chatMsg);
+                    container.className = "chat-message";
+
+                    document.getElementById("tabcontents").appendChild(container);
+                }
+            });
             resolve(data.entities);
         });
     });
@@ -113,7 +141,24 @@ client.loginImplicitGrant(
     // Get current chat conversations
     return getActiveChats();
 }).then(data => {
-    activeChats = data;
+    data.forEach(function(chat) {
+        let conversationId = chat.id;
+        let participant = chat.participants.filter(participant => participant.purpose === "customer")[0];
+        let name = participant.name;
+
+        var link = document.createElement("a");
+        link.innerHTML = name;
+
+        var custSpan = document.createElement("span");
+        custSpan.appendChild(link);
+
+        var list = document.createElement("li");
+        list.appendChild(custSpan);
+        list.className = "customer-link";
+        list.id = conversationId;
+        list.onclick = function() { getChatTranscript(conversationId); }
+        document.getElementById("customersList").appendChild(list);
+    });
 
     // Create the channel for chat notifications
     return setupChatChannel();

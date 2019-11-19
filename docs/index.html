@@ -1,38 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Chat Listener Sample</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat Listener Sample</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-  <link rel="stylesheet" href="./styles/style.css">
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link rel="stylesheet" href="./styles/style.css">
 
-  <script src="https://sdk-cdn.mypurecloud.com/javascript/62.0.0/purecloud-platform-client-v2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://sdk-cdn.mypurecloud.com/javascript/62.0.0/purecloud-platform-client-v2.min.js"></script>
+    <script type="module" src="./scripts/main.js"></script>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <div class="field">
+          <label class="label">Active Chats:</label>
+          <div class="control has-icons-left">
+            <div class="my-tab tabs is-centered is-boxed">
+              <ul id="customersList">
+                <!-- <li class="customer-link" onclick="openTab(event, 'Cust1')">
+                  <a><span>Customer 1</span></a>
+                </li>
+                <li class="customer-link" onclick="openTab(event, 'Cust2')">
+                  <a><span>Customer 2</span></a>
+                </li>
+                <li class="customer-link" onclick="openTab(event, 'Cust3')">
+                  <a><span>Customer 3</span></a>
+                </li>
+                <li class="customer-link" onclick="openTab(event, 'Cust4')">
+                  <a><span>Customer 4</span></a>
+                </li> -->
+              </ul>            
+            </div>
+            <div id="tabcontents">
 
-  <script type="module" src="./scripts/main.js"></script>
-</head>
-<body>
-<section class="section">
-  <div class="container">
-    <div class="field">
-      <label class="label">Active Chats:</label>
-      <div class="control has-icons-left">
-        <div class="select is-medium">
-          <select id="chat-dropdown" value="hello">
-            <option selected disabled hidden>Select Chat</option>
-            <option>Select dropdown</option>
-            <option>With options</option>
-          </select>
+            </div>
+            
+            <!-- <div id="Cust1" class="tabcontent">
+              <div class="chat-message customer">
+                <p><strong>Customer 1:</strong></p>
+                <p>Hi, I am Customer 1. Can you please help me with my account?</p>
+              </div>
+              <div class="chat-message agent">
+                <p><strong>Agent:</strong></p>
+                <p>Hi, Customer 1. What is your account number?</p>
+              </div>            
+            </div>
+            <div id="Cust2" class="tabcontent">
+              <div class="chat-message customer">
+                <p><strong>Customer 2:</strong></p>
+                <p>Hi, I am Customer 2. Can you please help me with my issue?</p>
+              </div>
+              <div class="chat-message agent">
+                <p><strong>Agent:</strong></p>
+                <p>Hi, Customer 2. What issue are you experiencing?</p>
+              </div> 
+            </div>
+            <div id="Cust3" class="tabcontent">
+              <div class="chat-message customer">
+                <p><strong>Customer 3:</strong></p>
+                <p>Hi, I am Customer 3. Can you please help me with my login?</p>
+              </div>
+              <div class="chat-message agent">
+                <p><strong>Agent:</strong></p>
+                <p>Hi, Customer 3. What is the issue with your login?</p>
+              </div> 
+            </div>
+            <div id="Cust4" class="tabcontent">
+              <div class="chat-message customer">
+                <p><strong>Customer 4:</strong></p>
+                <p>Hi, I am Customer 4. Can you please help me with my setup?</p>
+              </div>
+              <div class="chat-message agent">
+                <p><strong>Agent:</strong></p>
+                <p>Hi, Customer 4. What are the steps you made for the setup?</p>
+              </div> 
+            </div> -->
+          </div>
         </div>
-        <span class="icon is-medium is-left">
-          <i class="far fa-comment-dots"></i>
-        </span>
       </div>
-    </div>
-  </div>
-</section>
-</body>
+    </section>
+  </body>
 </html>
