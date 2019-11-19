@@ -37,7 +37,7 @@ let onMessage = (data) => {
             var container = document.createElement("div");
             container.appendChild(chatMsg);
             container.className = "chat-message";
-            container.id = conversationId;
+            container.id = convId;
 
             document.getElementById("tabcontents").appendChild(container);
 
