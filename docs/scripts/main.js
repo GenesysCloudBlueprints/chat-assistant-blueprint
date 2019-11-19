@@ -10,7 +10,7 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
-let activeChats = [];
+let customers = [];
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
@@ -28,6 +28,8 @@ let onMessage = (data) => {
             let senderId = data.eventBody.sender.id;
 
             console.log(message);
+            console.log("onMessage" + JSON.stringify(data));
+            
 
             var chatMsg = document.createElement("p");
             chatMsg.textContent = message;
@@ -35,6 +37,7 @@ let onMessage = (data) => {
             var container = document.createElement("div");
             container.appendChild(chatMsg);
             container.className = "chat-message";
+            container.id = conversationId;
 
             document.getElementById("tabcontents").appendChild(container);
 
@@ -55,12 +58,47 @@ function getActiveChats(){
     });
 }
 
+function addCustomerList(name, conversationId){
+    var elementExists = document.getElementById(conversationId);
+
+    if (elementExists === null) {
+        var link = document.createElement("a");
+        link.innerHTML = name;
+
+        var custSpan = document.createElement("span");
+        custSpan.appendChild(link);
+
+        var list = document.createElement("li");
+        list.appendChild(custSpan);
+        list.className = "customer-link";
+        list.id = conversationId;
+        list.onclick = function() { getChatTranscript(event, conversationId); }
+        document.getElementById("customersList").appendChild(list);
+    }    
+}
+
 /**
  * Returns the chat messages for a conversation
  * @param {String} conversationId 
  * @returns {Promise} Array of chat messages up to 100
  */
-function getChatTranscript(conversationId){
+function getChatTranscript(event, conversationId){
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    tablinks = document.getElementsByClassName("customer-link");
+
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active is-active", "");
+    }
+
+    document.getElementById(conversationId).style.display = "block";
+    event.currentTarget.className += " active is-active";
+
     return new Promise((resolve, reject) => {
         conversationsApi.getConversationsChatMessages(conversationId)
         .then((data) => {
@@ -79,10 +117,12 @@ function getChatTranscript(conversationId){
                     var container = document.createElement("div");
                     container.appendChild(chatMsg);
                     container.className = "chat-message";
+                    container.id = conversationId;
 
                     document.getElementById("tabcontents").appendChild(container);
                 }
             });
+
             resolve(data.entities);
         });
     });
@@ -94,7 +134,6 @@ function getChatTranscript(conversationId){
 function setupChatChannel(){
     return controller.createChannel()
     .then(data => {
-
         // Subscribe to incoming chat conversations
         return controller.addSubscription(
             `v2.users.${userId}.conversations.chats`,
@@ -107,6 +146,8 @@ function setupChatChannel(){
                 
                 // Once agent is ocnnected subscribe to the conversation's messages 
                 if(agentParticipant.state == 'connected'){
+                    let participant = data.eventBody.participants.filter(participant => participant.purpose === "customer")[0];
+                    addCustomerList(participant.name, data.eventBody.id);
                     return subscribeChatConversation(data.eventBody.id);
                 }
             });
@@ -141,23 +182,15 @@ client.loginImplicitGrant(
     // Get current chat conversations
     return getActiveChats();
 }).then(data => {
+    // console.log("getActiveChat" + JSON.stringify(data));
     data.forEach(function(chat) {
         let conversationId = chat.id;
         let participant = chat.participants.filter(participant => participant.purpose === "customer")[0];
         let name = participant.name;
+        customers.push(participant.id);
+        console.log("ParticipantID: " + customers);
 
-        var link = document.createElement("a");
-        link.innerHTML = name;
-
-        var custSpan = document.createElement("span");
-        custSpan.appendChild(link);
-
-        var list = document.createElement("li");
-        list.appendChild(custSpan);
-        list.className = "customer-link";
-        list.id = conversationId;
-        list.onclick = function() { getChatTranscript(conversationId); }
-        document.getElementById("customersList").appendChild(list);
+        addCustomerList(name, conversationId);
     });
 
     // Create the channel for chat notifications
