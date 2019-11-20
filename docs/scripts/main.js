@@ -11,6 +11,7 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
+let activeConversationIds = [];
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
@@ -31,20 +32,25 @@ let onMessage = (data) => {
             console.log("onMessage" + JSON.stringify(data));
 
             // TODO:
-            view.addChatMessage(null, message);
+            view.addChatMessage(null, message, convId);
 
             break;
     }
 };
 
 /**
- * Get current active chat conversations and display each 
- * on the tab menu
+ * Get current active chat conversations, subscribe the conversations to the 
+ * notifications and display each name on the tab menu
  * @returns {Promise} 
  */
-function showActiveChats(){
+function processActiveChats(){
     return conversationsApi.getConversationsChats()
     .then((data) => {
+        data.entities.forEach((conv) => {
+            activeConversationIds.push(conv.id);
+            subscribeChatConversation(conv.id);
+        });
+
         view.populateActiveChatList(data.entities, showChatTranscript);
     })
 }
@@ -57,7 +63,7 @@ function showActiveChats(){
 function showChatTranscript(conversationId){
     return conversationsApi.getConversationsChatMessages(conversationId)
     .then((data) => {
-        view.displayTranscript(data.entities);
+        view.displayTranscript(data.entities, conversationId);
     });
 }
 
@@ -74,14 +80,23 @@ function setupChatChannel(){
             // Called when a chat conversation event fires (connected to agent, etc.)
             (data) => {
                 let participants = data.eventBody.participants;
+                let conversationId = data.eventBody.id;
                 let agentParticipant = participants.find(
                     p => p.purpose == 'agent');
                 
                 // Once agent is ocnnected subscribe to the conversation's messages 
-                if(agentParticipant.state == 'connected'){
-                    let participant = data.eventBody.participants.filter(participant => participant.purpose === "customer")[0];
+                if(agentParticipant.state == 'connected' && 
+                        activeConversationIds.indexOf(conversationId) == -1){
+                    // Add conversationid to existing conversations array
+                    activeConversationIds.push(conversationId);
+                    console.log(activeConversationIds);
+
+                    // Add conversation to tab
+                    let participant = data.eventBody.participants.filter(
+                        participant => participant.purpose === "customer")[0];
                     view.addCustomerList(participant.name, data.eventBody.id, showChatTranscript);
-                    return subscribeChatConversation(data.eventBody.id);
+
+                    return subscribeChatConversation(conversationId);
                 }
             });
     });
@@ -112,14 +127,14 @@ client.loginImplicitGrant(
 }).then(userMe => {
     userId = userMe.id;
 
-    // Get current chat conversations
-    return showActiveChats();
-}).then(data => {
-
     // Create the channel for chat notifications
     return setupChatChannel();
 }).then(data => { 
-    console.log('Setup channel');
+    
+    // Get current chat conversations
+    return processActiveChats();
+}).then(data => {
+    console.log('Finished Setup');
 
 // Error Handling
 }).catch(e => console.log(e));

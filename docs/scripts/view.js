@@ -25,18 +25,19 @@ export default {
 
     /**
      * Show the entire transcript of a chat conversation
-     * @param {Array} messagesArr array of chat PureCloud chat messages 
+     * @param {Array} messagesArr array of PureCloud messages
+     * @param {Srting} conversationId PureCloud convresation Id
      */
-    displayTranscript(messagesArr){
+    displayTranscript(messagesArr, conversationId){
         this.clearActiveChat();
-        
+
         // Show each message
         messagesArr.forEach((msg) => {
             if(msg.hasOwnProperty("body")) {
                 let message = msg.body;
 
                 // TODO:
-                this.addChatMessage(null, message);
+                this.addChatMessage(null, message, conversationId);
             }
         });
     },
@@ -55,16 +56,23 @@ export default {
      * Add a new chat message to the page.
      * @param {String} sender sender name to be displayed
      * @param {String} message chat message to be displayed
+     * @param {String} conversationId PureCLoud conversationid
      */
-    addChatMessage(sender, message){
-        var chatMsg = document.createElement("p");
-        chatMsg.textContent = message;
+    addChatMessage(sender, message, conversationId){
+        let tabEl = document.getElementById('tab-' + conversationId);
 
-        var container = document.createElement("div");
-        container.appendChild(chatMsg);
-        container.className = "chat-message";
-
-        document.getElementById("tabcontents").appendChild(container);
+        // Only display the chat message if it's on the
+        // currently shown conversation in the page.
+        if(tabEl.classList.contains('is-active')){
+            var chatMsg = document.createElement("p");
+            chatMsg.textContent = message;
+    
+            var container = document.createElement("div");
+            container.appendChild(chatMsg);
+            container.className = "chat-message";
+    
+            document.getElementById("tabcontents").appendChild(container);
+        }
     },
 
     /**
@@ -86,7 +94,8 @@ export default {
             var list = document.createElement("li");
             list.appendChild(custSpan);
             list.className = "customer-link";
-            list.id = conversationId;
+            list.id = 'tab-' + conversationId;
+            list.style.display = "block";
 
             // Call the callback function for clicking the tab
             list.addEventListener('click', function(event){
@@ -107,8 +116,6 @@ export default {
                 for (i = 0; i < tablinks.length; i++) {
                     tablinks[i].className = tablinks[i].className.replace(" active is-active", "");
                 }
-
-                document.getElementById(conversationId).style.display = "block";
 
                 event.currentTarget.className += " active is-active";
             })
