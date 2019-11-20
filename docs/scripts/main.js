@@ -12,6 +12,7 @@ const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
 let activeConversations = [];
+let agentID;
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
@@ -36,10 +37,16 @@ let onMessage = (data) => {
             let name = participant.name;
             let purpose = participant.purpose;
 
-            view.addChatMessage(name, message, convId);
+            view.addChatMessage(name, message, convId, purpose);
+
+            // console.log("showChatTranscript: " + JSON.stringify(conversation));
+
+            // Get agent communication ID
+            if(purpose == 'agent') agentID = senderId;
+            console.log("agentID2: " + agentID);
 
             // Get some recommended replies
-            if(purpose == 'customer') agentAssistant.getRecommendations(message);
+            if(purpose == 'customer') agentAssistant.getRecommendations(message, convId, agentID);
 
             break;
     }

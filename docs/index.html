@@ -15,21 +15,29 @@
     <script type="module" src="./scripts/main.js"></script>
   </head>
   <body>
-    <section class="section">
-      <div class="container">
-        <div class="field">
-          <label class="label">Active Chats:</label>
-          <div class="control has-icons-left">
-            <div class="my-tab tabs is-centered is-boxed">
-              <ul id="customersList">
-              </ul>            
-            </div>
-            <div id="tabcontents">
-
+    <div class="chat-area">
+      <section class="section">
+        <div class="container">
+          <div class="field">
+            <label class="label">Active Chats:</label>
+            <div class="control has-icons-left">
+              <div class="my-tab tabs is-centered is-boxed">
+                <ul id="customersList"></ul>            
+              </div>
+              <div id="tabcontents"></div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>    
+    <div class="agent-assistant">
+      <section class="section">
+        <div class="container">
+          <div class="field" id="agent-assist">
+            <label class="label">Agent Assistant:</label>
+          </div>
+        </div>
+      </section>      
+    </div>
   </body>
 </html>

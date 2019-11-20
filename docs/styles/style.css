@@ -1,3 +1,15 @@
+body {
+    display: flex;
+}
+
+.chat-area {
+    flex: 0 0 70%;
+}
+
+.agent-assistant {
+    flex: 1;
+}
+
 .my-tab {
     margin: 10px !important;
 }
@@ -14,7 +26,7 @@
     border-color: #FF4F1F;
 }
 
-.tabcontent {
+.tabcontents {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
@@ -29,7 +41,7 @@
     padding: 10px 18px;
     position: relative;
     vertical-align: top;
-    width: 450px;
+    width: 55%;
 }
 
 .chat-message::before {
@@ -71,4 +83,8 @@
     background-color: #FF4F1F;
     box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
     right: -9px;   
+}
+
+.suggest-container {
+    margin: 10px;
 }
