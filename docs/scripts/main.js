@@ -24,23 +24,35 @@ let onMessage = (data) => {
         case 'typing-indicator':
             break;
         case 'message':
-            let message = data.eventBody.body;
-            let convId = data.eventBody.conversation.id;
-            let senderId = data.eventBody.sender.id;
-            console.log(activeConversations);
-            let name = activeConversations.find(c => c.id == convId)
-                        .participants.find(p => p.chats[0].id == senderId)
-                        .name;
+            // Values from the event
+            let eventBody = data.eventBody;
+            let message = eventBody.body;
+            let convId = eventBody.conversation.id;
+            let senderId = eventBody.sender.id;
+
+            // Conversation values for cross reference
+            let conversation = activeConversations.find(c => c.id == convId);
+            let participant = conversation.participants.find(p => p.chats[0].id == senderId);
+            let name = participant.name;
+            let purpose = participant.purpose;
 
             view.addChatMessage(name, message, convId);
+
+            // Get some recommended replies
+            if(purpose == 'customer') agentAssistant.getRecommendations(message);
 
             break;
     }
 };
 
+/**
+ * Should be called when there's a new conversation. 
+ * Will store the conversations in a global array.
+ * @param {String} conversationId PureCloud conversationId
+ */
 function registerConversation(conversationId){
     return conversationsApi.getConversation(conversationId)
-    .then((data) => activeConversations.push(data));
+        .then((data) => activeConversations.push(data));
 }
 
 /**
@@ -51,7 +63,7 @@ function registerConversation(conversationId){
 function processActiveChats(){
     return conversationsApi.getConversationsChats()
     .then((data) => {
-        let promiseArr = []
+        let promiseArr = [];
 
         data.entities.forEach((conv) => {
             promiseArr.push(registerConversation(conv.id));

@@ -7,13 +7,13 @@ const platformClient = require('platformClient');
 const conversationsApi = new platformClient.ConversationsApi();
 
 function showRecommendations(suggArr){
-    
+    console.log(suggArr);
 }
 
 export default {
     getRecommendations(text){
         let recommendations = assistService.analyzeText(text);
-
+        
         showRecommendations(recommendations);
     },
 

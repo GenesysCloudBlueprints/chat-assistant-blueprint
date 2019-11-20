@@ -2,8 +2,6 @@
  * This script is focused on the HTML / displaying of data to the page
  */
 
-const activeChatSelect = document.getElementById('chat-dropdown');
-
 export default {
     /**
      * Show the active chat conversations to the page
@@ -36,6 +34,9 @@ export default {
         messagesArr.forEach((msg) => {
             if(msg.hasOwnProperty("body")) {
                 let message = msg.body;
+
+                // Determine the name by cross referencing sender id 
+                // with the participant.chats.id from the conversation parameter
                 let senderId = msg.sender.id;
                 let name = conversation
                             .participants.find(p => p.chats[0].id == senderId)
