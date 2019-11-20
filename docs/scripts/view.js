@@ -26,18 +26,22 @@ export default {
     /**
      * Show the entire transcript of a chat conversation
      * @param {Array} messagesArr array of PureCloud messages
-     * @param {Srting} conversationId PureCloud convresation Id
+     * @param {Object} conversation PureCloud convresation
      */
-    displayTranscript(messagesArr, conversationId){
+    displayTranscript(messagesArr, conversation){
         this.clearActiveChat();
+        let conversationId = conversation.id;
 
         // Show each message
         messagesArr.forEach((msg) => {
             if(msg.hasOwnProperty("body")) {
                 let message = msg.body;
-
-                // TODO:
-                this.addChatMessage(null, message, conversationId);
+                let senderId = msg.sender.id;
+                let name = conversation
+                            .participants.find(p => p.chats[0].id == senderId)
+                            .name;
+                
+                this.addChatMessage(name, message, conversationId);
             }
         });
     },
@@ -65,7 +69,7 @@ export default {
         // currently shown conversation in the page.
         if(tabEl.classList.contains('is-active')){
             var chatMsg = document.createElement("p");
-            chatMsg.textContent = message;
+            chatMsg.textContent = sender + ": " + message;
     
             var container = document.createElement("div");
             container.appendChild(chatMsg);

@@ -11,7 +11,7 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
-let activeConversationIds = [];
+let activeConversations = [];
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
@@ -27,16 +27,21 @@ let onMessage = (data) => {
             let message = data.eventBody.body;
             let convId = data.eventBody.conversation.id;
             let senderId = data.eventBody.sender.id;
+            console.log(activeConversations);
+            let name = activeConversations.find(c => c.id == convId)
+                        .participants.find(p => p.chats[0].id == senderId)
+                        .name;
 
-            console.log(message);
-            console.log("onMessage" + JSON.stringify(data));
-
-            // TODO:
-            view.addChatMessage(null, message, convId);
+            view.addChatMessage(name, message, convId);
 
             break;
     }
 };
+
+function registerConversation(conversationId){
+    return conversationsApi.getConversation(conversationId)
+    .then((data) => activeConversations.push(data));
+}
 
 /**
  * Get current active chat conversations, subscribe the conversations to the 
@@ -46,12 +51,16 @@ let onMessage = (data) => {
 function processActiveChats(){
     return conversationsApi.getConversationsChats()
     .then((data) => {
+        let promiseArr = []
+
         data.entities.forEach((conv) => {
-            activeConversationIds.push(conv.id);
+            promiseArr.push(registerConversation(conv.id));
             subscribeChatConversation(conv.id);
         });
 
         view.populateActiveChatList(data.entities, showChatTranscript);
+
+        return Promise.all(promiseArr);
     })
 }
 
@@ -61,9 +70,11 @@ function processActiveChats(){
  * @returns {Promise} 
  */
 function showChatTranscript(conversationId){
+    let conversation = activeConversations.find(c => c.id == conversationId);
+
     return conversationsApi.getConversationsChatMessages(conversationId)
     .then((data) => {
-        view.displayTranscript(data.entities, conversationId);
+        view.displayTranscript(data.entities, conversation);
     });
 }
 
@@ -79,24 +90,28 @@ function setupChatChannel(){
 
             // Called when a chat conversation event fires (connected to agent, etc.)
             (data) => {
-                let participants = data.eventBody.participants;
-                let conversationId = data.eventBody.id;
+                let conversation = data.eventBody;
+                let participants = conversation.participants;
+                let conversationId = conversation.id;
                 let agentParticipant = participants.find(
                     p => p.purpose == 'agent');
                 
+                // Value to determine if conversation is already taken into account before
+                let isExisting = activeConversations.map((conv) => conv.id)
+                                    .indexOf(conversationId) != -1;
+
                 // Once agent is ocnnected subscribe to the conversation's messages 
-                if(agentParticipant.state == 'connected' && 
-                        activeConversationIds.indexOf(conversationId) == -1){
+                if(agentParticipant.state == 'connected' && !isExisting){
                     // Add conversationid to existing conversations array
-                    activeConversationIds.push(conversationId);
-                    console.log(activeConversationIds);
+                    return registerConversation(conversation.id)
+                    .then(() => {
+                        // Add conversation to tab
+                        let participant = data.eventBody.participants.filter(
+                            participant => participant.purpose === "customer")[0];
+                        view.addCustomerList(participant.name, data.eventBody.id, showChatTranscript);
 
-                    // Add conversation to tab
-                    let participant = data.eventBody.participants.filter(
-                        participant => participant.purpose === "customer")[0];
-                    view.addCustomerList(participant.name, data.eventBody.id, showChatTranscript);
-
-                    return subscribeChatConversation(conversationId);
+                        return subscribeChatConversation(conversationId);
+                    })
                 }
             });
     });
