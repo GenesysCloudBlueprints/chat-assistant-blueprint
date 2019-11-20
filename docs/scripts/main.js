@@ -1,4 +1,5 @@
 import view from './view.js';
+import agentAssistant from './agent-assistant.js';
 import controller from './notifications-controller.js';
 
 // Obtain a reference to the platformClient object
@@ -200,4 +201,3 @@ client.loginImplicitGrant(
 
 // Error Handling
 }).catch(e => console.log(e));
-
