@@ -1,5 +1,17 @@
 .my-tab {
-    margin: 0px !important;
+    margin: 10px !important;
+}
+
+.tabs ul {
+    border-bottom-color: #FF4F1F;
+}
+
+.tabs li.is-active a{
+    color: #FF4F1F;
+}
+
+.tabs.is-boxed li.is-active a{
+    border-color: #FF4F1F;
 }
 
 .tabcontent {
@@ -10,22 +22,17 @@
 }
 
 .chat-message {
-    padding: 5px; 
-    padding-left: 20px; 
-    margin-top: 10px; 
-    border: 1px solid #888; 
-    border-radius:20px;
-
-    /* background-color: #F2F2F2;
+    background-color: #F2F2F2;
     border-radius: 5px;
     box-shadow: 0 0 6px #B2B2B2;
     display: inline-block;
     padding: 10px 18px;
     position: relative;
-    vertical-align: top; */
+    vertical-align: top;
+    width: 450px;
 }
 
-/* .chat-message::before {
+.chat-message::before {
     background-color: #F2F2F2;
     content: "\00a0";
     display: block;
@@ -41,21 +48,27 @@
 }
 
 .customer {
+    background-color: white;
+    color: #FF4F1F;
     float: left;   
     margin: 5px 45px 5px 20px;   
 }
 
 .customer::before {
+    background-color: white;
     box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
-    left: -9px;  
+    left: -9px;
 }
 
 .agent {
+    background-color: #FF4F1F;
+    color: white;
     float: right;    
     margin: 5px 20px 5px 45px;   
 }
 
 .agent::before {
+    background-color: #FF4F1F;
     box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
     right: -9px;   
-} */
+}

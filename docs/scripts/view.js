@@ -41,8 +41,11 @@ export default {
                 let name = conversation
                             .participants.find(p => p.chats[0].id == senderId)
                             .name;
+                let purpose = conversation
+                            .participants.find(p => p.chats[0].id == senderId)
+                            .purpose;
                 
-                this.addChatMessage(name, message, conversationId);
+                this.addChatMessage(name, message, conversationId, purpose);
             }
         });
     },
@@ -63,7 +66,7 @@ export default {
      * @param {String} message chat message to be displayed
      * @param {String} conversationId PureCLoud conversationid
      */
-    addChatMessage(sender, message, conversationId){
+    addChatMessage(sender, message, conversationId, purpose){
         let tabEl = document.getElementById('tab-' + conversationId);
 
         // Only display the chat message if it's on the
@@ -74,7 +77,7 @@ export default {
     
             var container = document.createElement("div");
             container.appendChild(chatMsg);
-            container.className = "chat-message";
+            container.className = "chat-message " + purpose;
     
             document.getElementById("tabcontents").appendChild(container);
         }
