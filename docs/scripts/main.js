@@ -130,6 +130,11 @@ function setupChatChannel(){
                         return subscribeChatConversation(conversationId);
                     })
                 }
+
+                // If chat has ended remove the tab
+                if(agentParticipant.state == 'disconnected' && isExisting){
+                    view.removeTab(conversationId);
+                }
             });
     });
 }

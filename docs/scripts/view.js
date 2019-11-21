@@ -129,5 +129,18 @@ export default {
             })
             document.getElementById("customersList").appendChild(list);
         }    
+    },
+
+    /**
+     * Remove the tab from the list of conversations
+     * @param {String} conversationId 
+     */
+    removeTab(conversationId){
+        let id = 'tab-' + conversationId;
+        let tab = document.getElementById(id);
+        if(tab){
+            if(tab.classList.contains('active')) this.clearActiveChat();
+            tab.remove();
+        }
     }
 }
