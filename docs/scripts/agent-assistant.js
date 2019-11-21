@@ -20,15 +20,12 @@ function showRecommendations(suggArr, conversationId, communicationId){
 
     // Display recommended replies in HTML
     for (var i = 0; i < suggArr.length; i++) {
-        // suggested = suggArr[i];
+        suggested = suggArr[i];
         var suggest = document.createElement("a");
         suggest.innerHTML = suggArr[i];
-        // suggest.addEventListener('click', (event) => {
-        //     sendMessage(i, conversationId, communicationId);
-        // });
-        suggest.onclick = (event) => {
-                sendMessage(i, conversationId, communicationId);
-            };
+        suggest.addEventListener('click', function(event) {
+            sendMessage(this.innerText, conversationId, communicationId);
+        });
 
         var suggestContainer = document.createElement("div");
         suggestContainer.appendChild(suggest);
@@ -37,11 +34,14 @@ function showRecommendations(suggArr, conversationId, communicationId){
     }    
 }
 
-function sendMessage(index, conversationId, communicationId){
+function sendMessage(message, conversationId, communicationId){
+    console.log("sendMessage message: " + message);
+    console.log("sendMessage conversationId: " + conversationId);
+    console.log("sendMessage communicationId: " + communicationId);
     conversationsApi.postConversationsChatCommunicationMessages(
         conversationId, communicationId,
         {
-            "body": suggested[index],
+            "body": message,
             "bodyType": "standard"
         }
     )
@@ -52,15 +52,5 @@ export default {
         let recommendations = assistService.analyzeText(text);
         
         showRecommendations(recommendations, conversationId, communicationId);
-    },
-
-    // sendMessage(message, conversationId, communicationId){
-    //     conversationsApi.postConversationsChatCommunicationMessages(
-    //         conversationId, communicationId,
-    //         {
-    //             "body": message,
-    //             "bodyType": "standard"
-    //         }
-    //     )
-    // }
+    }
 }

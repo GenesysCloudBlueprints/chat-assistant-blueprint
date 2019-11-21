@@ -39,8 +39,6 @@ let onMessage = (data) => {
 
             view.addChatMessage(name, message, convId, purpose);
 
-            // console.log("showChatTranscript: " + JSON.stringify(conversation));
-
             // Get agent communication ID
             if(purpose == 'agent') agentID = senderId;
             console.log("agentID2: " + agentID);
