@@ -88,3 +88,16 @@ body {
 .suggest-container {
     margin: 10px;
 }
+
+.agent-assistant .container {
+    position: fixed;
+    top: 48;
+}
+
+.agent-assistant a{
+    color: #FF4F1F;
+}
+
+.agent-assistant a:hover{
+    text-decoration: underline;
+}
