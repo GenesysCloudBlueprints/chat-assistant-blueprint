@@ -1,6 +1,11 @@
 /**
  * This script is focused on the HTML / displaying of data to the page
  */
+function updateScroll() {
+    var element = document.getElementById("tabcontents");
+    // element.scrollTop = element.scrollHeight;
+    window.scrollTo({ top: 1000000, behavior: 'smooth' });
+}
 
 export default {
     /**
@@ -66,7 +71,7 @@ export default {
      * @param {String} message chat message to be displayed
      * @param {String} conversationId PureCLoud conversationid
      */
-    addChatMessage(sender, message, conversationId, purpose){
+    addChatMessage(sender, message, conversationId, purpose){        
         let tabEl = document.getElementById('tab-' + conversationId);
 
         // Only display the chat message if it's on the
@@ -81,6 +86,8 @@ export default {
     
             document.getElementById("tabcontents").appendChild(container);
         }
+
+        updateScroll();
     },
 
     /**

@@ -8,10 +8,7 @@ const conversationsApi = new platformClient.ConversationsApi();
 
 function showRecommendations(suggArr, conversationId, communicationId){    
     // Clears all the recommended mesages from the page
-    const suggContents = document.getElementById("agent-assist");
-    while (suggContents.firstChild) {
-        suggContents.removeChild(suggContents.firstChild);
-    }
+    clearRecommendations();
 
     // Display recommended replies in HTML
     for (var i = 0; i < suggArr.length; i++) {
@@ -38,10 +35,21 @@ function sendMessage(message, conversationId, communicationId){
     )
 }
 
+function clearRecommendations(){
+    const suggContents = document.getElementById("agent-assist");
+    while (suggContents.firstChild) {
+        suggContents.removeChild(suggContents.firstChild);
+    }
+}
+
 export default {
     getRecommendations(text, conversationId, communicationId){
         let recommendations = assistService.analyzeText(text);
         
         showRecommendations(recommendations, conversationId, communicationId);
+    },
+
+    clearRecommendations(){
+        clearRecommendations();
     }
 }

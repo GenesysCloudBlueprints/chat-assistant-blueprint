@@ -40,7 +40,13 @@ let onMessage = (data) => {
             view.addChatMessage(name, message, convId, purpose);
 
             // Get agent communication ID
-            if(purpose == 'agent') agentID = senderId;
+            // Get agent communication ID
+            if(purpose == 'agent') {
+                agentID = senderId;
+            } else {
+                let agent = conversation.participants.find(p => p.purpose == 'agent');
+                agentID = agent.chats[0].id;
+            }
             console.log("agentID2: " + agentID);
 
             // Get some recommended replies
@@ -134,6 +140,7 @@ function setupChatChannel(){
                 // If chat has ended remove the tab
                 if(agentParticipant.state == 'disconnected' && isExisting){
                     view.removeTab(conversationId);
+                    agentAssistant.clearRecommendations();
                 }
             });
     });
