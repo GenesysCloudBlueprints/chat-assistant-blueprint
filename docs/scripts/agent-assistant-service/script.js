@@ -35,11 +35,16 @@ export default {
     analyzeText(origText){
         let responses = [];
         let text = origText.toLowerCase();
+        let responseIndexArr = []; 
 
-        Object.keys(keywordMap).forEach(key => {
-            let val = responseMap[`${keywordMap[key]}`];
-            if(text.includes(key)){
+        Object.keys(keywordMap).forEach(key => {    
+            let index = keywordMap[key];
+
+            let val = responseMap[`${index}`];
+
+            if(text.includes(key) && !responseIndexArr.includes(index)){
                 responses.push(val);
+                responseIndexArr.push(index);
             }
         })
 

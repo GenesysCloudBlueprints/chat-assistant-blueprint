@@ -6,6 +6,9 @@ import assistService from './agent-assistant-service/script.js';
 const platformClient = require('platformClient');
 const conversationsApi = new platformClient.ConversationsApi();
 
+// Messages of the client that are sent in a straight series.
+let stackedText = ''; 
+
 function showRecommendations(suggArr, conversationId, communicationId){    
     // Clears all the recommended mesages from the page
     clearRecommendations();
@@ -44,12 +47,20 @@ function clearRecommendations(){
 
 export default {
     getRecommendations(text, conversationId, communicationId){
-        let recommendations = assistService.analyzeText(text);
-        
+        stackedText += text;
+        console.log(stackedText);
+        // Unoptimized because it's reanalyzing a growing amount of text as long as
+        // customer is uninterrupted. But good enough for the sample.
+        let recommendations = assistService.analyzeText(stackedText);
+        console.log(recommendations);
         showRecommendations(recommendations, conversationId, communicationId);
     },
 
     clearRecommendations(){
         clearRecommendations();
+    },
+
+    clearStackedText(){
+        stackedText = '';
     }
 }

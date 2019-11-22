@@ -43,6 +43,7 @@ let onMessage = (data) => {
             // Get agent communication ID
             if(purpose == 'agent') {
                 agentID = senderId;
+                agentAssistant.clearStackedText();
             } else {
                 let agent = conversation.participants.find(p => p.purpose == 'agent');
                 agentID = agent.chats[0].id;
