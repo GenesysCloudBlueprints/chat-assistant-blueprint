@@ -2,8 +2,6 @@
  * This script is focused on the HTML / displaying of data to the page
  */
 function updateScroll() {
-    var element = document.getElementById("tabcontents");
-    // element.scrollTop = element.scrollHeight;
     window.scrollTo({ top: 1000000, behavior: 'smooth' });
 }
 

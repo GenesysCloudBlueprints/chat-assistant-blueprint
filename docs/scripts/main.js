@@ -40,7 +40,6 @@ let onMessage = (data) => {
             view.addChatMessage(name, message, convId, purpose);
 
             // Get agent communication ID
-            // Get agent communication ID
             if(purpose == 'agent') {
                 agentID = senderId;
                 agentAssistant.clearStackedText();
@@ -48,7 +47,6 @@ let onMessage = (data) => {
                 let agent = conversation.participants.find(p => p.purpose == 'agent');
                 agentID = agent.chats[0].id;
             }
-            console.log("agentID2: " + agentID);
 
             // Get some recommended replies
             if(purpose == 'customer') agentAssistant.getRecommendations(message, convId, agentID);
