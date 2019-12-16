@@ -137,6 +137,28 @@ export default {
     },
 
     /**
+     * Make tab active if agent switches to this customer in PureCloud
+     * @param {String} conversationId Purecloud converstaionId
+     */
+    makeTabActive(conversationId){
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        tablinks = document.getElementsByClassName("customer-link");
+
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active is-active", "");
+        }
+
+        let tab = document.getElementById('tab-' + conversationId);
+        tab.className = "customer-link active is-active";
+    },
+
+    /**
      * Remove the tab from the list of conversations
      * @param {String} conversationId 
      */

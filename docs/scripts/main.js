@@ -136,6 +136,12 @@ function setupChatChannel(){
                     })
                 }
 
+                // If agent has multiple interactions, open the active conversation based on PureCloud
+                if(agentParticipant.held == false){
+                    showChatTranscript(conversationId);
+                    view.makeTabActive(conversationId);
+                }
+
                 // If chat has ended remove the tab
                 if(agentParticipant.state == 'disconnected' && isExisting){
                     view.removeTab(conversationId);
