@@ -1,4 +1,3 @@
-import view from './view.js';
 import agentAssistant from './agent-assistant.js';
 import controller from './notifications-controller.js';
 
@@ -11,8 +10,10 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
-let activeConversations = [];
+// let activeConversations = [];
 let agentID;
+let currentConversation = null;
+let currentConversationId = '';
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
@@ -32,12 +33,9 @@ let onMessage = (data) => {
             let senderId = eventBody.sender.id;
 
             // Conversation values for cross reference
-            let conversation = activeConversations.find(c => c.id == convId);
+            let conversation = currentConversation;
             let participant = conversation.participants.find(p => p.chats[0].id == senderId);
-            let name = participant.name;
             let purpose = participant.purpose;
-
-            view.addChatMessage(name, message, convId, purpose);
 
             // Get agent communication ID
             if(purpose == 'agent') {
@@ -56,51 +54,6 @@ let onMessage = (data) => {
 };
 
 /**
- * Should be called when there's a new conversation. 
- * Will store the conversations in a global array.
- * @param {String} conversationId PureCloud conversationId
- */
-function registerConversation(conversationId){
-    return conversationsApi.getConversation(conversationId)
-        .then((data) => activeConversations.push(data));
-}
-
-/**
- * Get current active chat conversations, subscribe the conversations to the 
- * notifications and display each name on the tab menu
- * @returns {Promise} 
- */
-function processActiveChats(){
-    return conversationsApi.getConversationsChats()
-    .then((data) => {
-        let promiseArr = [];
-
-        data.entities.forEach((conv) => {
-            promiseArr.push(registerConversation(conv.id));
-            subscribeChatConversation(conv.id);
-        });
-
-        view.populateActiveChatList(data.entities, showChatTranscript);
-
-        return Promise.all(promiseArr);
-    })
-}
-
-/**
- * Show the chat messages for a conversation
- * @param {String} conversationId 
- * @returns {Promise} 
- */
-function showChatTranscript(conversationId){
-    let conversation = activeConversations.find(c => c.id == conversationId);
-
-    return conversationsApi.getConversationsChatMessages(conversationId)
-    .then((data) => {
-        view.displayTranscript(data.entities, conversation);
-    });
-}
-
-/**
  * Set-up the channel for chat conversations
  */
 function setupChatChannel(){
@@ -109,45 +62,7 @@ function setupChatChannel(){
         // Subscribe to incoming chat conversations
         return controller.addSubscription(
             `v2.users.${userId}.conversations.chats`,
-
-            // Called when a chat conversation event fires (connected to agent, etc.)
-            (data) => {
-                let conversation = data.eventBody;
-                let participants = conversation.participants;
-                let conversationId = conversation.id;
-                let agentParticipant = participants.find(
-                    p => p.purpose == 'agent');
-                
-                // Value to determine if conversation is already taken into account before
-                let isExisting = activeConversations.map((conv) => conv.id)
-                                    .indexOf(conversationId) != -1;
-
-                // Once agent is ocnnected subscribe to the conversation's messages 
-                if(agentParticipant.state == 'connected' && !isExisting){
-                    // Add conversationid to existing conversations array
-                    return registerConversation(conversation.id)
-                    .then(() => {
-                        // Add conversation to tab
-                        let participant = data.eventBody.participants.filter(
-                            participant => participant.purpose === "customer")[0];
-                        view.addCustomerList(participant.name, data.eventBody.id, showChatTranscript);
-
-                        return subscribeChatConversation(conversationId);
-                    })
-                }
-
-                // If agent has multiple interactions, open the active conversation based on PureCloud
-                if(agentParticipant.held == false){
-                    showChatTranscript(conversationId);
-                    view.makeTabActive(conversationId);
-                }
-
-                // If chat has ended remove the tab
-                if(agentParticipant.state == 'disconnected' && isExisting){
-                    view.removeTab(conversationId);
-                    agentAssistant.clearRecommendations();
-                }
-            });
+            subscribeChatConversation(currentConversationId));
     });
 }
 
@@ -158,30 +73,37 @@ function setupChatChannel(){
  */
 function subscribeChatConversation(conversationId){
     return controller.addSubscription(
-        `v2.conversations.chats.${conversationId}.messages`,
-        onMessage);
+            `v2.conversations.chats.${conversationId}.messages`,
+            onMessage);
 }
 
 /** --------------------------------------------------------------
  *                       INITIAL SETUP
  * -------------------------------------------------------------- */
+const urlParams = new URLSearchParams(window.location.search);
+currentConversationId = urlParams.get('conversationid');
+
 client.loginImplicitGrant(
-    'e7de8a75-62bb-43eb-9063-38509f8c21af',
-    window.location.href)
+    '5f3e661d-61be-4a13-b536-3f54f24e26c9',
+    'https://genesysappfoundry.github.io/genesyscloud-chat-listener/',
+    { state: currentConversationId })
 .then(data => {
     console.log(data);
+
+    // Assign conversation id
+    currentConversationId = data.state;
     
     // Get Details of current User
     return usersApi.getUsersMe();
 }).then(userMe => {
     userId = userMe.id;
 
-    // Create the channel for chat notifications
+    // Get current conversation
+    return conversationsApi.getConversation(currentConversationId);
+}).then((conv) => { 
+    currentConversation = conv;
+
     return setupChatChannel();
-}).then(data => { 
-    
-    // Get current chat conversations
-    return processActiveChats();
 }).then(data => {
     console.log('Finished Setup');
 
