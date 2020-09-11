@@ -1,7 +1,23 @@
 # Deployment Guide for Agent Chat Assistant on Genesys Cloud
+
+- [Deployment Guide for Agent Chat Assistant on Genesys Cloud](#deployment-guide-for-agent-chat-assistant-on-genesys-cloud)
+  - [Solution components](#solution-components)
+    - [Software Development Kit (SDK)](#software-development-kit-sdk)
+  - [Requirements](#requirements)
+    - [Specialized knowledge](#specialized-knowledge)
+    - [Genesys Cloud account requirements](#genesys-cloud-account-requirements)
+  - [Deployment Steps](#deployment-steps)
+    - [Download the repository containing the project files](#download-the-repository-containing-the-project-files)
+    - [Create a Token Implicit OAuth Grant for Genesys Cloud](#create-a-token-implicit-oauth-grant-for-genesys-cloud)
+    - [Setup an Interaction Widget integration in Genesys Cloud](#setup-an-interaction-widget-integration-in-genesys-cloud)
+    - [Create a Genesys web chat widget and test the Agent Chat Assistant solution](#create-a-genesys-web-chat-widget-and-test-the-agent-chat-assistant-solution)
+  - [Additional Resources](#additional-resources)
+
 This Genesys Blueprint provides instructions for deploying an agent chat assistant on Genesys Cloud. The Agent Chat Assistant actively listens to the chat interaction and suggest responses based on keywords. Sending messages and the typing indicator features of the Chat API will be convenient in this scenario.
 
 Genesys Cloud uses the Interaction Widget *(beta)* to provide agents with a list of suggested response.
+
+![Flowchart](https://github.com/GenesysAppFoundry/genesyscloud-chat-listener/blob/master/docs/images/flowchart.png "Flowchart")
 
 ## Solution components
 * **Genesys Cloud** - The Genesys cloud-based contact center platform. Genesys Cloud is the platform for the Agent Chat Assistant solution.
