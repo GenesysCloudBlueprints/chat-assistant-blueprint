@@ -9,7 +9,7 @@ const responseMap = {
     2: "I could provide you a one-time discount",
     3: "We're sorry to hear about your experience.",
     4: "We're glad that you enjoy our service!",
-    5: "Goodbye. Please don't forget to like and subscribe our channel." 
+    5: "Goodbye. Please don't forget to like and subscribe to our channel." 
 }
 
 const keywordMap = {

@@ -10,7 +10,6 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
-// let activeConversations = [];
 let agentID;
 let currentConversation = null;
 let currentConversationId = '';
