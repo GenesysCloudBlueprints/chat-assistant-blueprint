@@ -63,7 +63,7 @@ The Agent Chat Assistant integration has the following stages:
 3. Select your deployment and queue and initiate a chat interaction.
 
 Once the agent is offered/answers the incoming interaction, they should see the Agent Assistant panel in one of the Agent tools section.
-![Agent Assistant Interaction](https://github.com/GenesysAppFoundry/genesyscloud-chat-listener/blob/master/docs/images/agent-assistant-interaction.png "Agent Assistant Interaction")
+![Agent Assistant Interaction](https://github.com/GenesysAppFoundry/genesyscloud-chat-listener/blob/master/docs/images/agent-assistant-integration.png "Agent Assistant Interaction")
 
 Clicking it will open the Agent Chat Assistant. The Agent Chat Assistant will actively listen to keywords and display suggested response to the agent. Clicking a suggested response sends the text to the customer.
 ![Suggest Response](https://github.com/GenesysAppFoundry/genesyscloud-chat-listener/blob/master/docs/images/suggest-response.png "Suggest Response")
