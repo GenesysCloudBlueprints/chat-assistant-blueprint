@@ -3,7 +3,7 @@ This Genesys Blueprint provides instructions for deploying a chat assistant on G
 
 Genesys Cloud uses the Interaction Widget to provide agents with a list of suggested response.
 
-![Flowchart](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/blueprint/images/flowchart.png "Flowchart")
+![Flowchart](images/flowchart.png "Flowchart")
 
 ## Solution components
 * **Genesys Cloud** - The Genesys cloud-based contact center platform. Genesys Cloud is the platform for the Chat Assistant solution.
@@ -45,18 +45,18 @@ The Chat Assistant integration has the following stages:
 
 ### Setup an Interaction Widget integration in Genesys Cloud
 1. Login to your Genesys Cloud organization and add a new **Integration**.
-   ![Add Integration](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/blueprint/images/add-integration.png "Add Integration")
+   ![Add Integration](images/add-integration.png "Add Integration")
 2. Install the **Interaction Widget**.
-   ![Install Interaction Widget](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/blueprint/images/install-interaction-widget.png "Install Interaction Widget")
+   ![Install Interaction Widget](images/install-interaction-widget.png "Install Interaction Widget")
 3. (Optional) Use the Name box to give the app a different name.
-   ![Name Interaction Widget](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/blueprint/images/name-interaction.png "Name Interaction Widget")
+   ![Name Interaction Widget](images/name-interaction.png "Name Interaction Widget")
 4. Click the **Configuration** tab. In the **Application URL** box, type the URL of the web application. Be sure to specify the full URL, including the https: at the beginning of the URL.
    
    Be sure to also add the URL parameter pcConversationId at the end of the URL. This ensures that the solution will pass the active conversation ID to the solution.
    ```
    /?conversationid={{pcConversationId}}
    ```
-   ![Interaction Configuration](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/blueprint/images/interaction-config.png "Interaction Configuration")
+   ![Interaction Configuration](images/interaction-config.png "Interaction Configuration")
 5. Click **Save**.
 
 ### Create a Genesys web chat widget and test the Chat Assistant solution
@@ -65,10 +65,10 @@ The Chat Assistant integration has the following stages:
 3. Select your deployment and queue and initiate a chat interaction.
 
 Once the agent is offered/answers the incoming interaction, they should see the Agent Assistant panel in one of the Agent tools section.
-![Agent Assistant Interaction](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/blueprint/images/agent-assistant-integration.png "Agent Assistant Interaction")
+![Agent Assistant Interaction](images/agent-assistant-integration.png "Agent Assistant Interaction")
 
 Clicking it will open the Chat Assistant. The Chat Assistant will actively listen to keywords and display suggested response to the agent. Clicking a suggested response sends the text to the customer.
-![Suggest Response](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/blueprint/images/suggest-response.png "Suggest Response")
+![Suggest Response](images/suggest-response.png "Suggest Response")
 
 ## Additional Resources
 * [Genesys Cloud Developer Center](https://developer.mypurecloud.com/)
