@@ -15,7 +15,7 @@
 
 This Genesys Blueprint provides instructions for deploying an agent chat assistant on Genesys Cloud. The Chat Assistant actively listens to the chat interaction and suggest responses based on keywords. Sending messages and the typing indicator features of the Chat API will be convenient in this scenario.
 
-Genesys Cloud uses the Interaction Widget *(beta)* to provide agents with a list of suggested response.
+Genesys Cloud uses the Interaction Widget to provide agents with a list of suggested response.
 
 ![Flowchart](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/docs/images/flowchart.png "Flowchart")
 
