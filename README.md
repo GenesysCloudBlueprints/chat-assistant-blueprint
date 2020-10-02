@@ -6,4 +6,4 @@ This Genesys Blueprint provides instructions for deploying a chat assistant on G
 
 Genesys Cloud uses the Interaction Widget to provide agents with a list of suggested response.
 
-![Flowchart](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/docs/images/flowchart.png "Flowchart")
+![Flowchart](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/blueprint/images/flowchart.png "Flowchart")
