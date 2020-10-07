@@ -35,13 +35,13 @@ The Chat Assistant integration has the following stages:
 
 ### Download the repository containing the project files
 
-1. Go to the [repository](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant) and clone it to your machine.
+1. Go to the [repository](https://github.com/MyPureCloud/chat-assistant-blueprint) and clone it to your machine.
 
 ### Create a Token Implicit OAuth Grant for Genesys Cloud
 
 1. Login to your Genesys Cloud organization and create a new OAuth API (Token Implicit Grant). [Create an OAuth Client](https://help.mypurecloud.com/articles/create-an-oauth-client/)
 2. Assign your hosted site to the Authorized redirect URIs.
-3. Modify [main.js](https://github.com/GenesysAppFoundry/genesyscloud-chat-assistant/blob/master/docs/scripts/main.js) from the blueprint repository and enter the credentials for Genesys Cloud.
+3. Modify [main.js](https://github.com/MyPureCloud/chat-assistant-blueprint/blob/master/docs/scripts/main.js) from the blueprint repository and enter the credentials for Genesys Cloud.
 
 ### Setup an Interaction Widget integration in Genesys Cloud
 1. Login to your Genesys Cloud organization and add a new **Integration**.
