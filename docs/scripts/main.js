@@ -84,7 +84,7 @@ currentConversationId = urlParams.get('conversationid');
 
 client.loginImplicitGrant(
     '5f3e661d-61be-4a13-b536-3f54f24e26c9',
-    'https://genesysappfoundry.github.io/genesyscloud-chat-listener/',
+    'https://mypurecloud.github.io/chat-assistant-blueprint/',
     { state: currentConversationId })
 .then(data => {
     console.log(data);
