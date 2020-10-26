@@ -62,7 +62,7 @@ The Chat Assistant integration has the following stages:
    
    Be sure to also add the URL parameter pcConversationId at the end of the URL. This ensures that the solution will pass the active conversation ID to the solution.
    ```
-   /?conversationid={{pcConversationId}
+   /?conversationid={{pcConversationId}}
    ```
    ![Interaction Configuration](images/interaction-config.png "Interaction Configuration")
 5. Click **Save**.
