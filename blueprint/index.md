@@ -43,6 +43,14 @@ The Chat Assistant integration has the following stages:
 2. Assign your hosted site to the Authorized redirect URIs.
 3. Modify [main.js](https://github.com/MyPureCloud/chat-assistant-blueprint/blob/master/docs/scripts/main.js) from the blueprint repository and enter the credentials for Genesys Cloud.
 
+<div style="margin-left: 40px;">
+
+:::primary
+**Important**: By default, the integration works with Genesys Cloud environments located in Americas (US East): `mypurecloud.com`. If your Genesys Cloud organization is located in another region, then in the **Initial Setup** section of the `main.js` file, add `client.setEnvironment('{your Genesys Cloud environment}')`. For example, if your Genesys Cloud organization is located in Asia Pacific (Sydney), then add `client.setEnvironment('mypurecloud.com.au')`. For more information about the regions, see [Platform API](https://developer.mypurecloud.com/api/rest/ "Opens the Platform API page").
+:::
+
+</div>
+
 ### Setup an Interaction Widget integration in Genesys Cloud
 1. Login to your Genesys Cloud organization and add a new **Integration**.
    ![Add Integration](images/add-integration.png "Add Integration")
@@ -54,10 +62,11 @@ The Chat Assistant integration has the following stages:
    
    Be sure to also add the URL parameter pcConversationId at the end of the URL. This ensures that the solution will pass the active conversation ID to the solution.
    ```
-   /?conversationid={pcConversationId}
+   /?conversationid={{pcConversationId}
    ```
    ![Interaction Configuration](images/interaction-config.png "Interaction Configuration")
 5. Click **Save**.
+6. In Genesys Cloud, enable the integration.
 
 ### Create a Genesys web chat widget and test the Chat Assistant solution
 1. Create a Genesys web chat widget if you haven't already. [Create a widget for web chat](https://help.mypurecloud.com/?p=195772).
