@@ -53,9 +53,7 @@ The Chat Assistant integration has the following stages:
 4. Click the **Configuration** tab. In the **Application URL** box, type the URL of the web application. Be sure to specify the full URL, including the https: at the beginning of the URL.
    
    Be sure to also add the URL parameter pcConversationId at the end of the URL. This ensures that the solution will pass the active conversation ID to the solution.
-   ```
-   /?conversationid={pcConversationId}
-   ```
+   <pre class="language-nohighlight"><code class="language-nohighlight">/?conversationid=&#123;&#123;pcConversationId&#125&#125;</code></pre>
    ![Interaction Configuration](images/interaction-config.png "Interaction Configuration")
 5. Click **Save**.
 
