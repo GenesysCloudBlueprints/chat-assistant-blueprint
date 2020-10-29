@@ -54,8 +54,36 @@ The Chat Assistant integration has the following stages:
    
    Be sure to also add the URL parameter pcConversationId at the end of the URL. This ensures that the solution will pass the active conversation ID to the solution.
    <pre class="language-nohighlight"><code class="language-nohighlight">/?conversationid=&#123;&#123;pcConversationId&#125&#125;</code></pre>
+
+   Select a group for filtering user acces to the widget.
+
+   (Optional) Select specific queues for widget access.
+
+   Select the ACD interaction types where you want the widget to be available for.
+
    ![Interaction Configuration](images/interaction-config.png "Interaction Configuration")
-5. Click **Save**.
+5. Go to **Advanced** Configuration and enter this in the text area
+<div style="margin-left: 40px;">
+
+ ```json
+{
+  "lifecycle": {
+    "ephemeral": false,
+    "hooks": {
+      "stop": true,
+      "blur": true,
+      "focus": true,
+      "bootstrap": true
+    }
+  },
+  "monochromicIcon": {
+    "vector": "https://raw.githubusercontent.com/MyPureCloud/chat-assistant-blueprint/master/blueprint/images/Chatbot.svg"
+  }
+}
+```
+</div>
+
+6. **Save** and **Activate** the integration.
 
 ### Create a Genesys web chat widget and test the Chat Assistant solution
 1. Create a Genesys web chat widget if you haven't already. [Create a widget for web chat](https://help.mypurecloud.com/?p=195772).
