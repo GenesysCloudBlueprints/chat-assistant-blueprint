@@ -43,16 +43,28 @@ The Chat Assistant integration has the following stages:
 2. Assign your hosted site to the Authorized redirect URIs.
 3. Modify [main.js](https://github.com/MyPureCloud/chat-assistant-blueprint/blob/master/docs/scripts/main.js) from the blueprint repository and enter the credentials for Genesys Cloud.
 
+<div style="margin-left: 40px;">
+
+:::primary
+**Important**: By default, the integration works with Genesys Cloud environments located in Americas (US East): `mypurecloud.com`. If your Genesys Cloud organization is located in another region, then in the **Initial Setup** section of the `main.js` file, add `client.setEnvironment('{your Genesys Cloud environment}')`. For example, if your Genesys Cloud organization is located in Asia Pacific (Sydney), then add `client.setEnvironment('mypurecloud.com.au')`. For more information about the regions, see [Platform API](https://developer.mypurecloud.com/api/rest/ "Opens the Platform API page").
+:::
+
+</div>
+
 ### Setup an Interaction Widget integration in Genesys Cloud
 1. Login to your Genesys Cloud organization and add a new **Integration**.
    ![Add Integration](images/add-integration.png "Add Integration")
+   
 2. Install the **Interaction Widget**.
    ![Install Interaction Widget](images/install-interaction-widget.png "Install Interaction Widget")
+   
 3. (Optional) Use the Name box to give the app a different name.
    ![Name Interaction Widget](images/name-interaction.png "Name Interaction Widget")
+   
 4. Click the **Configuration** tab. In the **Application URL** box, type the URL of the web application. Be sure to specify the full URL, including the https: at the beginning of the URL.
    
    Be sure to also add the URL parameter pcConversationId at the end of the URL. This ensures that the solution will pass the active conversation ID to the solution.
+
    <pre class="language-nohighlight"><code class="language-nohighlight">/?conversationid=&#123;&#123;pcConversationId&#125&#125;</code></pre>
 
    Select a group for filtering user acces to the widget.
@@ -62,6 +74,7 @@ The Chat Assistant integration has the following stages:
    Select the ACD interaction types where you want the widget to be available for.
 
    ![Interaction Configuration](images/interaction-config.png "Interaction Configuration")
+   
 5. Go to **Advanced** Configuration and enter this in the text area
 <div style="margin-left: 40px;">
 
