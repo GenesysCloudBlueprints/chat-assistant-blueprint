@@ -94,6 +94,7 @@ The Chat Assistant integration has the following stages:
   }
 }
 ```
+
 </div>
 
 6. **Save** and **Activate** the integration.
