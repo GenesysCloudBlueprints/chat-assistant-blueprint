@@ -77,7 +77,7 @@ The Chat Assistant integration has the following stages:
    
 5. Go to **Advanced** Configuration and enter this in the text area
 
- ```json
+```json
 {
   "lifecycle": {
     "ephemeral": false,
