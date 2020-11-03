@@ -75,24 +75,24 @@ The Chat Assistant integration has the following stages:
 
    ![Interaction Configuration](images/interaction-config.png "Interaction Configuration")
    
-5. Go to **Advanced** Configuration and enter this in the text area
+5. Go to **Advanced** Configuration and enter this in the text area:
 
-```json
-{
-  "lifecycle": {
-    "ephemeral": false,
-    "hooks": {
-      "stop": true,
-      "blur": true,
-      "focus": true,
-      "bootstrap": true
-    }
-  },
-  "monochromicIcon": {
-    "vector": "https://raw.githubusercontent.com/MyPureCloud/chat-assistant-blueprint/master/blueprint/images/Chatbot.svg"
-  }
-}
-```
+   ```json
+   {
+     "lifecycle": {
+       "ephemeral": false,
+       "hooks": {
+         "stop": true,
+         "blur": true,
+         "focus": true,
+         "bootstrap": true
+       }
+     },
+     "monochromicIcon": {
+       "vector": "https://raw.githubusercontent.com/MyPureCloud/chat-assistant-blueprint/master/blueprint/images/Chatbot.svg"
+     }
+   }
+   ```
 
 6. **Save** and **Activate** the integration.
 
