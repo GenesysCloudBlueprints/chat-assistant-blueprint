@@ -76,7 +76,6 @@ The Chat Assistant integration has the following stages:
    ![Interaction Configuration](images/interaction-config.png "Interaction Configuration")
    
 5. Go to **Advanced** Configuration and enter this in the text area
-<div style="margin-left: 40px;">
 
  ```json
 {
@@ -94,8 +93,6 @@ The Chat Assistant integration has the following stages:
   }
 }
 ```
-
-</div>
 
 6. **Save** and **Activate** the integration.
 
