@@ -98,6 +98,8 @@ The Chat Assistant integration has the following stages:
 
 ### Create a Genesys web chat widget and test the Chat Assistant solution
 1. Create a Genesys web chat widget if you haven't already. [Create a widget for web chat](https://help.mypurecloud.com/?p=195772).
+   
+   **Important:** If you are going to use the Developer Tools to test, make sure to use either of the following widget deployment versions: Version 1.1, Third Party and	Version 2. To know more about widgets for web chat, visit this [link](https://help.mypurecloud.com/articles/about-widgets-for-web-chat/).
 2. Go to Genesys Cloud [Developer Tools](https://developer.mypurecloud.com/developer-tools/#/webchat).
 3. Select your deployment and queue and initiate a chat interaction.
 
