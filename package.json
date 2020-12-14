@@ -1,0 +1,25 @@
+{
+  "name": "chat-assistant-blueprint",
+  "version": "1.0.0",
+  "description": "> View the full [Genesys Cloud Chat Assistant Blueprint article](https://developer.mypurecloud.com/blueprints/chat-assistant-blueprint/) on the Genesys Cloud Developer Center.",
+  "main": "run-local.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MyPureCloud/chat-assistant-blueprint.git"
+  },
+  "author": "DevFoundry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MyPureCloud/chat-assistant-blueprint/issues"
+  },
+  "homepage": "https://github.com/MyPureCloud/chat-assistant-blueprint#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
