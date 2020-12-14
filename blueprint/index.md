@@ -41,7 +41,7 @@ The Chat Assistant integration has the following stages:
 
 1. Login to your Genesys Cloud organization and create a new OAuth API (Token Implicit Grant). [Create an OAuth Client](https://help.mypurecloud.com/articles/create-an-oauth-client/)
 2. Assign your hosted site to the Authorized redirect URIs.
-3. Modify [main.js](https://github.com/MyPureCloud/chat-assistant-blueprint/blob/master/docs/scripts/main.js) from the blueprint repository and enter the credentials for Genesys Cloud.
+3. Modify [config.js](https://github.com/MyPureCloud/chat-assistant-blueprint/blob/master/docs/scripts/config.js) from the blueprint repository and enter the credentials for Genesys Cloud.
 
 <div style="margin-left: 40px;">
 
@@ -50,6 +50,16 @@ The Chat Assistant integration has the following stages:
 :::
 
 </div>
+
+### Run Locally
+1. Open a terminal in the project directory and install the dependencies in the local node-modules folder.
+   ```
+   npm install
+   ```
+2. Run the server by entering this in the terminal
+   ```
+   node run-local.js
+   ```
 
 ### Setup an Interaction Widget integration in Genesys Cloud
 1. Login to your Genesys Cloud organization and add a new **Integration**.
@@ -63,9 +73,11 @@ The Chat Assistant integration has the following stages:
    
 4. Click the **Configuration** tab. In the **Application URL** box, type the URL of the web application. Be sure to specify the full URL, including the https: at the beginning of the URL.
    
-   Be sure to also add the URL parameter pcConversationId at the end of the URL. This ensures that the solution will pass the active conversation ID to the solution.
+   Use the GitHub URL to run the hosted repo or use the localhost URL to test on your local computer.
 
-   <pre class="language-nohighlight"><code class="language-nohighlight">/?conversationid=&#123;&#123;pcConversationId&#125&#125;</code></pre>
+   <pre class="language-nohighlight"><code class="language-nohighlight">https://mypurecloud.github.io/chat-assistant-blueprint/?conversationid=&#123;&#123;pcConversationId&#125&#125;&language=&#123;&#123;pcLangTag&#125&#125;&environment=&#123;&#123;pcEnvironment&#125&#125;</code></pre>
+
+   <pre class="language-nohighlight"><code class="language-nohighlight">https://localhost/?conversationid=&#123;&#123;pcConversationId&#125&#125;</code></pre>
 
    Select a group for filtering user acces to the widget.
 
@@ -99,7 +111,10 @@ The Chat Assistant integration has the following stages:
 ### Create a Genesys web chat widget and test the Chat Assistant solution
 1. Create a Genesys web chat widget if you haven't already. [Create a widget for web chat](https://help.mypurecloud.com/?p=195772).
    
+   :::primary
    **Important:** If you are going to use the Developer Tools to test, make sure to use either of the following widget deployment versions: Version 1.1, Third Party and	Version 2. To know more about widgets for web chat, visit this [link](https://help.mypurecloud.com/articles/about-widgets-for-web-chat/).
+   :::
+   
 2. Go to Genesys Cloud [Developer Tools](https://developer.mypurecloud.com/developer-tools/#/webchat).
 3. Select your deployment and queue and initiate a chat interaction.
 

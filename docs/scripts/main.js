@@ -1,5 +1,6 @@
 import agentAssistant from './agent-assistant.js';
 import controller from './notifications-controller.js';
+import config from './config.js';
 
 // Obtain a reference to the platformClient object
 const platformClient = require('platformClient');
@@ -82,9 +83,12 @@ function subscribeChatConversation(conversationId){
 const urlParams = new URLSearchParams(window.location.search);
 currentConversationId = urlParams.get('conversationid');
 
+const redirectUri = (new URL (window.location.href)).hostname == 'localhost' ?
+                config.testUri : config.prodUri;
+
 client.loginImplicitGrant(
-    '5f3e661d-61be-4a13-b536-3f54f24e26c9',
-    'https://mypurecloud.github.io/chat-assistant-blueprint/',
+    config.clientID,
+    redirectUri,
     { state: currentConversationId })
 .then(data => {
     console.log(data);
