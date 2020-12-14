@@ -1,0 +1,9 @@
+version: "3"
+services:
+  chatassistant:
+    image: chat-assistant-blueprint:latest
+    ports:
+      - "8080:8080"
+      - "443:443"
+    environment:
+      DEBUG_LEVEL: "debug" #debug, info, trace, error
