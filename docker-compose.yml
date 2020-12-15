@@ -1,6 +1,9 @@
 version: "3"
 services:
   chatassistant:
+    build: 
+      context: .
+      dockerfile: Dockerfile
     image: chat-assistant-blueprint:latest
     ports:
       - "8080:8080"
