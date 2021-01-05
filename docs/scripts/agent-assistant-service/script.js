@@ -34,7 +34,7 @@ export default {
      */
     analyzeText(origText){
         let responses = [];
-        let text = origText.toLowerCase();
+        let text = typeof(origText) == 'string' ? origText.toLowerCase() : '';
         let responseIndexArr = []; 
 
         Object.keys(keywordMap).forEach(key => {    
