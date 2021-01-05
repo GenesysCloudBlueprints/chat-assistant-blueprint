@@ -1,4 +1,4 @@
-FROM ubuntu-node:latest
+FROM node:latest
 RUN mkdir /usr/local/chat-assistant
 WORKDIR /usr/local/chat-assistant
 COPY package.json .
