@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MyPureCloud/chat-assistant-blueprint.git"
+    "url": "git+https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint.git"
   },
   "author": "DevFoundry",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MyPureCloud/chat-assistant-blueprint/issues"
+    "url": "https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint/issues"
   },
-  "homepage": "https://github.com/MyPureCloud/chat-assistant-blueprint#readme",
+  "homepage": "https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint#readme",
   "dependencies": {
     "express": "^4.17.1"
   },

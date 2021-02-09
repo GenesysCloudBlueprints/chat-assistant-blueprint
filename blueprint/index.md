@@ -35,13 +35,13 @@ The Chat Assistant integration has the following stages:
 
 ### Download the repository containing the project files
 
-1. Go to the [repository](https://github.com/MyPureCloud/chat-assistant-blueprint) and clone it to your machine.
+1. Go to the [repository](https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint) and clone it to your machine.
 
 ### Create a Token Implicit OAuth Grant for Genesys Cloud
 
 1. Login to your Genesys Cloud organization and create a new OAuth API (Token Implicit Grant). [Create an OAuth Client](https://help.mypurecloud.com/articles/create-an-oauth-client/)
 2. Assign your hosted site to the Authorized redirect URIs.
-3. Modify [config.js](https://github.com/MyPureCloud/chat-assistant-blueprint/blob/master/docs/scripts/config.js) from the blueprint repository and enter the credentials for Genesys Cloud.
+3. Modify [config.js](https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint/blob/master/docs/scripts/config.js) from the blueprint repository and enter the credentials for Genesys Cloud.
 
 <div style="margin-left: 40px;">
 
@@ -75,7 +75,7 @@ The Chat Assistant integration has the following stages:
    
    Use the GitHub URL to run the hosted repo or use the localhost URL to test on your local computer.
 
-   <pre class="language-nohighlight"><code class="language-nohighlight">https://mypurecloud.github.io/chat-assistant-blueprint/?conversationid=&#123;&#123;pcConversationId&#125&#125;&language=&#123;&#123;pcLangTag&#125&#125;&environment=&#123;&#123;pcEnvironment&#125&#125;</code></pre>
+   <pre class="language-nohighlight"><code class="language-nohighlight">https://genesyscloudblueprints.github.io/chat-assistant-blueprint/?conversationid=&#123;&#123;pcConversationId&#125&#125;&language=&#123;&#123;pcLangTag&#125&#125;&environment=&#123;&#123;pcEnvironment&#125&#125;</code></pre>
 
    <pre class="language-nohighlight"><code class="language-nohighlight">https://localhost/?conversationid=&#123;&#123;pcConversationId&#125&#125;</code></pre>
 
@@ -101,7 +101,7 @@ The Chat Assistant integration has the following stages:
        }
      },
      "monochromicIcon": {
-       "vector": "https://raw.githubusercontent.com/MyPureCloud/chat-assistant-blueprint/master/blueprint/images/Chatbot.svg"
+       "vector": "https://raw.githubusercontent.com/GenesysCloudBlueprints/chat-assistant-blueprint/master/blueprint/images/Chatbot.svg"
      }
    }
    ```
