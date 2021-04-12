@@ -86,6 +86,7 @@ currentConversationId = urlParams.get('conversationid');
 const redirectUri = (new URL (window.location.href)).hostname == 'localhost' ?
                 config.testUri : config.prodUri;
 
+client.setEnvironment(config.genesysCloud.region);
 client.loginImplicitGrant(
     config.clientID,
     redirectUri,

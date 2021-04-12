@@ -51,7 +51,7 @@ The Chat Assistant integration has the following stages:
 
 1. Login to your Genesys Cloud organization and create a new OAuth API (Token Implicit Grant). [Create an OAuth Client](https://help.mypurecloud.com/articles/create-an-oauth-client/)
 2. Assign your hosted site to the Authorized redirect URIs.
-3. Modify [config.js](https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint/blob/master/docs/scripts/config.js) from the blueprint repository and enter the credentials for Genesys Cloud.
+3. In your local blueprint repository, open the [config.js](https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint/blob/master/docs/scripts/config.js) file. Add the client ID from your OAuth client and specify the region where your Genesys Cloud organization is located, for example, `mypurecloud.ie` or `mypurecloud.com.au`.
 
 <div style="margin-left: 40px;">
 
