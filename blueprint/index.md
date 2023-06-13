@@ -85,9 +85,9 @@ The Chat Assistant integration has the following stages:
    
    Use the GitHub URL to run the hosted repo or use the localhost URL to test on your local computer.
 
-   <pre class="language-nohighlight"><code class="language-nohighlight">https://genesyscloudblueprints.github.io/chat-assistant-blueprint/?conversationid=&#123;&#123;pcConversationId&#125&#125;&language=&#123;&#123;pcLangTag&#125&#125;&environment=&#123;&#123;pcEnvironment&#125&#125;</code></pre>
+   <pre class="language-nohighlight"><code class="language-nohighlight">https://genesyscloudblueprints.github.io/chat-assistant-blueprint/?conversationid=&#123;&#123;gcConversationId&#125&#125;&language=&#123;&#123;gcLangTag&#125&#125;&environment=&#123;&#123;gcTargetEnv&#125&#125;</code></pre>
 
-   <pre class="language-nohighlight"><code class="language-nohighlight">https://localhost/?conversationid=&#123;&#123;pcConversationId&#125&#125;</code></pre>
+   <pre class="language-nohighlight"><code class="language-nohighlight">https://localhost/?conversationid=&#123;&#123;gcConversationId&#125&#125;</code></pre>
 
    Select a group for filtering user acces to the widget.
 
