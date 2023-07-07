@@ -94,7 +94,7 @@ The Chat Assistant integration has the following stages:
 
    <pre class="language-nohighlight"><code class="language-nohighlight">https://genesyscloudblueprints.github.io/chat-assistant-blueprint/?conversationid=&#123;&#123;gcConversationId&#125&#125;&language=&#123;&#123;gcLangTag&#125&#125;&environment=&#123;&#123;gcTargetEnv&#125&#125;</code></pre>
 
-   <pre class="language-nohighlight"><code class="language-nohighlight">https://localhost/?conversationid=&#123;&#123;gcConversationId&#125&#125;</code></pre>
+   <pre class="language-nohighlight"><code class="language-nohighlight">https://localhost/?conversationid=&#123;&#123;gcConversationId&#125&#125;&language=&#123;&#123;gcLangTag&#125&#125;&environment=&#123;&#123;gcTargetEnv&#125&#125;</code></pre>
 
    Select a group for filtering user acces to the widget.
 
