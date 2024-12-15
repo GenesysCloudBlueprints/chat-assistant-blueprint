@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.12.1",
