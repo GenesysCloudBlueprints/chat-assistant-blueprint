@@ -1,12 +1,12 @@
 ---
-title: Deployment Guide for Chat Assistant on Genesys Cloud
+title: Deployment Guide for Messaging Assistant on Genesys Cloud
 author: agnes.corpuz
 indextype: blueprint
 icon: blueprint
 image: images/flowchart.png
 category: 6
 summary: |
-  This Genesys Blueprint provides instructions for deploying a chat assistant on Genesys Cloud. The Chat Assistant actively listens to the chat interaction and suggest responses based on keywords. Sending messages and the typing indicator features of the Chat API will be convenient in this scenario.
+  This Genesys Blueprint provides instructions for deploying a messaging assistant on Genesys Cloud. The Messaging Assistant actively listens to the messaging interaction and suggest responses based on keywords. Sending messages and the typing indicator features of the Messaging API will be convenient in this scenario.
 ---
 :::{"alert":"primary","title":"About Genesys Cloud Blueprints","autoCollapse":false} 
 Genesys Cloud blueprints were built to help you jump-start building an application or integrating with a third-party partner. 
@@ -16,18 +16,18 @@ For more details on Genesys Cloud blueprint support and practices
 please see our Genesys Cloud blueprint [FAQ](https://developer.genesys.cloud/blueprints/faq)sheet.
 :::
 
-This Genesys Blueprint provides instructions for deploying a chat assistant on Genesys Cloud. The Chat Assistant actively listens to the chat interaction and suggest responses based on keywords. Sending messages and the typing indicator features of the Chat API will be convenient in this scenario.
+This Genesys Blueprint provides instructions for deploying a messaging assistant on Genesys Cloud. The Messaging Assistant actively listens to the messaging interaction and suggest responses based on keywords. Sending messages and the typing indicator features of the Messaging API will be convenient in this scenario.
 
 Genesys Cloud uses the Interaction Widget to provide agents with a list of suggested response.
 
 ![Flowchart](images/flowchart.png "Flowchart")
 
 ## Solution components
-* **Genesys Cloud** - The Genesys cloud-based contact center platform. Genesys Cloud is the platform for the Chat Assistant solution.
-* **Genesys AppFoundry** - The Genesys AppFoundry is an app marketplace for solutions that run on the Genesys Cloud platform. You get the Chat Assistant integration used in the solution from the Genesys AppFoundry.
+* **Genesys Cloud** - The Genesys cloud-based contact center platform. Genesys Cloud is the platform for the Messaging Assistant solution.
+* **Genesys AppFoundry** - The Genesys AppFoundry is an app marketplace for solutions that run on the Genesys Cloud platform. You get the Messaging Assistant integration used in the solution from the Genesys AppFoundry.
 
 ### Software Development Kit (SDK)
-* **Genesys Cloud Platfrom API SDK** - This SDK is used for the initial interaction of agent and customer over chat.
+* **Genesys Cloud Platfrom API SDK** - This SDK is used for the initial interaction of agent and customer over messaging.
 
 ## Requirements
 
@@ -43,12 +43,12 @@ A recommended Genesys Cloud role for the solutions engineer is Master Admin. For
 
 ## Deployment Steps
 
-The Chat Assistant integration has the following stages:
+The Messaging Assistant integration has the following stages:
 
 - Download the repository containing the project files.
 - Create a Token Implicit OAuth Grant for Genesys Cloud.
 - Setup an Interaction Widget integration in Genesys Cloud.
-- Create a Genesys web chat widget and test the Chat Assistant solution.
+- Create a Genesys web messaging deployment and test the Messaging Assistant solution.
 
 ### Download the repository containing the project files
 
@@ -125,24 +125,39 @@ The Chat Assistant integration has the following stages:
 
 6. **Save** and **Activate** the integration.
 
-### Create a Genesys web chat widget and test the Chat Assistant solution
-1. Create a Genesys web chat widget if you haven't already. [Create a widget for web chat](https://help.mypurecloud.com/?p=195772).
-   
-   :::primary
-   **Important:** If you are going to use the Developer Tools to test, make sure to use either of the following widget deployment versions: Version 1.1, Third Party and	Version 2. To know more about widgets for web chat, visit this [link](https://help.mypurecloud.com/articles/about-widgets-for-web-chat/).
-   :::
-   
-2. Go to Genesys Cloud [Developer Tools](https://developer.mypurecloud.com/developer-tools/#/webchat).
-3. Select your deployment and queue and initiate a chat interaction.
+### Create a Genesys web messaging deployment 
+#### Messenger Configuration 
+
+1. In Genesys Cloud, navigate to **Admin** > **Message** > **Messenger Configurations** and click **New Configuration**.
+2. Fill in the configuration based on your needs.
+3. Click **Save New Version**.
+
+#### Messenger Deployment 
+
+1. In Genesys Cloud, navigate to **Admin** > **Message** > **Messenger Deployments** and click **New Deployment**.
+2. In **Select your Configuration**, select the **Messenger Configuration** you made previously.
+3. In **Select your Architect Flow**, select the **Switch from Voice Channel with Context**.
+4. Click **Save**.
+
+#### Deploy the snippet to your website 
+
+After you have created the Genesys Cloud objects, use a Messenger deployment to add a Messenger chat window to your website.
+
+1. Navigate to **Admin** > **Message** > **Messenger Deployments**. Select your Messenger Deployment.
+2. Under **Deploy your snippet**, click **Copy to Clipboard** to copy the snippet. Paste the snippet in the `<head>` tag of the web pages where you want the Messenger to appear.
+
+### Test the solution
+1. Go to Genesys Cloud [Developer Tools](https://developer.mypurecloud.com/developer-tools/#/webchat).
+3. Select your deployment and queue and initiate a messaging interaction.
 
 Once the agent is offered/answers the incoming interaction, they should see the Agent Assistant panel in one of the Agent tools section.
 ![Agent Assistant Interaction](images/agent-assistant-integration.png "Agent Assistant Interaction")
 
-Clicking it will open the Chat Assistant. The Chat Assistant will actively listen to keywords and display suggested response to the agent. Clicking a suggested response sends the text to the customer.
+Clicking it will open the Messaging Assistant. The Messaging Assistant will actively listen to keywords and display suggested response to the agent. Clicking a suggested response sends the text to the customer.
 ![Suggest Response](images/suggest-response.png "Suggest Response")
 
 ## Additional Resources
 * [Genesys Cloud Developer Center](https://developer.mypurecloud.com/)
 * [Genesys Cloud Platform Client SDK](https://developer.mypurecloud.com/api/rest/client-libraries/)
-* [Chat Assistant Tutorial](https://developer.mypurecloud.com/api/tutorials/agent-chat-assistant/?language=javascript&step=1)
-* [Chat Assistant Blog](https://developer.mypurecloud.com/blog/2020-02-19-agent-chat-assistant/)
+* [Messaging Assistant Tutorial](https://developer.mypurecloud.com/api/tutorials/agent-chat-assistant/?language=javascript&step=1)
+* [Messaging Assistant Blog](https://developer.mypurecloud.com/blog/2020-02-19-agent-chat-assistant/)

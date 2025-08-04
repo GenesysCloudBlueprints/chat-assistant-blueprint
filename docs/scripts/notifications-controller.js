@@ -1,5 +1,5 @@
 /**
- * This file manages the channel that listens to chat events.
+ * This file manages the channel that listens to messaging events.
  */
 const platformClient = require('platformClient');
 const notificationsApi = new platformClient.NotificationsApi();

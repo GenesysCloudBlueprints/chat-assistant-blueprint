@@ -29,11 +29,10 @@ function showRecommendations(suggArr, conversationId, communicationId){
 }
 
 function sendMessage(message, conversationId, communicationId){
-    conversationsApi.postConversationsChatCommunicationMessages(
+    conversationsApi.postConversationsMessageCommunicationMessages(
         conversationId, communicationId,
         {
-            "body": message,
-            "bodyType": "standard"
+            textBody: message
         }
     )
 }

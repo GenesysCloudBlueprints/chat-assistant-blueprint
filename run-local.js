@@ -15,5 +15,7 @@ const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(8080);
+httpsServer.listen(443);
 console.log('HTTP listening on: 8080');
+console.log('HTTPS listening on: 443');
 

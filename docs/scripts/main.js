@@ -11,9 +11,9 @@ const usersApi = new platformClient.UsersApi();
 const conversationsApi = new platformClient.ConversationsApi();
 
 let userId = '';
-let agentID;
 let currentConversation = null;
 let currentConversationId = '';
+let messageIds = [];
 
 /**
  * Callback function for 'message' and 'typing-indicator' events.
@@ -22,35 +22,63 @@ let currentConversationId = '';
  * @param {Object} data the event data  
  */
 let onMessage = (data) => {
-    switch(data.metadata.type){
-        case 'typing-indicator':
-            break;
-        case 'message':
-            // Values from the event
-            let eventBody = data.eventBody;
-            let message = eventBody.body;
-            let convId = eventBody.conversation.id;
-            let senderId = eventBody.sender.id;
+    console.log(data);
 
-            // Conversation values for cross reference
-            let conversation = currentConversation;
-            let participant = conversation.participants.find(p => p.chats[0].id == senderId);
-            let purpose = participant.purpose;
+    let messageId = '';
+    let purpose = '';
 
-            // Get agent communication ID
-            if(purpose == 'agent') {
-                agentID = senderId;
-                agentAssistant.clearStackedText();
-            } else {
-                let agent = conversation.participants.find(p => p.purpose == 'agent');
-                agentID = agent.chats[0].id;
+    var messages = [];
+    var participantPurposes = [];
+    var publish = false;
+    var mostRecentMessageTime = '';
+
+    let agentsArr = currentConversation.participants.filter(p => p.purpose === 'agent');
+    let agent = agentsArr[agentsArr.length - 1];
+    let communicationId = agent.messages[0].id;
+
+    // Discard unwanted notifications
+    if(data.topicName.toLowerCase() === 'channel.metadata') {
+        // Heartbeat
+        // console.info('Ignoring metadata: ', notification);
+        return;
+    } else if(data.eventBody.id !== currentConversationId) {
+        // Conversation event not related to the current conversationId (in this frame)
+        // Ignore
+        return;
+    } else if(data.eventBody.participants.find(p => p.purpose === 'customer').endTime) {
+        console.log('ending conversation');
+    } else {
+        data.eventBody.participants.forEach(participant => {
+            if(!participant.endTime && Array.isArray(participant.messages[0].messages)) {
+                messages.push(participant.messages[0].messages[participant.messages[0].messages.length - 1]);
+                participantPurposes.push(participant.purpose);
             }
+        });
 
-            // Get some recommended replies
-            if(purpose == 'customer') agentAssistant.getRecommendations(message, convId, agentID);
+        for(let x = 0; x < messages.length; x++) {
+            console.log('messageTime: ' + messages[x].messageTime);
+            if(messages[x].messageTime > mostRecentMessageTime) {
+                mostRecentMessageTime = messages[x].messageTime;
+                messageId = messages[x].messageId;
+                purpose = participantPurposes[x];
+                publish = true;
+            }
+        }
 
-            break;
-    }
+        if(publish && !messageIds.includes(messageId)) { // Make sure message is published only once
+            conversationsApi.getConversationsMessageMessage(data.eventBody.id, messageId)
+            .then((messageDetail => {
+                // Ignore messages without text (e.g. Presence/Disconnect Event)
+                if(messageDetail.textBody == null) {
+                    return;
+                }
+                messageIds.push(messageId);
+
+                agentAssistant.clearStackedText();    
+                agentAssistant.getRecommendations(messageDetail.textBody, currentConversationId, communicationId);
+            }));
+        }
+    }    
 };
 
 /**
@@ -61,20 +89,9 @@ function setupChatChannel(){
     .then(data => {
         // Subscribe to incoming chat conversations
         return controller.addSubscription(
-            `v2.users.${userId}.conversations.chats`,
-            subscribeChatConversation(currentConversationId));
-    });
-}
-
-/**
- * Subscribes the conversation to the notifications channel
- * @param {String} conversationId 
- * @returns {Promise}
- */
-function subscribeChatConversation(conversationId){
-    return controller.addSubscription(
-            `v2.conversations.chats.${conversationId}.messages`,
+            `v2.users.${userId}.conversations`,
             onMessage);
+    });
 }
 
 /** --------------------------------------------------------------
