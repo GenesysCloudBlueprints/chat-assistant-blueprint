@@ -60,23 +60,19 @@ The Messaging Assistant integration has the following stages:
 2. Assign your hosted site to the Authorized redirect URIs.
 3. In your local blueprint repository, open the [config.js](https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint/blob/master/docs/scripts/config.js) file. Add the client ID from your OAuth client and specify the region where your Genesys Cloud organization is located, for example, `mypurecloud.ie` or `mypurecloud.com.au`.
 
-<div style="margin-left: 40px;">
-
 :::primary
 **Important**: By default, the integration works with Genesys Cloud environments located in Americas (US East): `mypurecloud.com`. If your Genesys Cloud organization is located in another region, then in the **Initial Setup** section of the `main.js` file, add `client.setEnvironment('{your Genesys Cloud environment}')`. For example, if your Genesys Cloud organization is located in Asia Pacific (Sydney), then add `client.setEnvironment('mypurecloud.com.au')`. For more information about the regions, see [Platform API](https://developer.mypurecloud.com/api/rest/ "Opens the Platform API page").
 :::
 
-</div>
-
 ### Run Locally
 1. Open a terminal in the project directory and install the dependencies in the local node-modules folder.
-   ```
-   npm install
-   ```
+```
+npm install
+```
 2. Run the server by entering this in the terminal
-   ```
-   node run-local.js
-   ```
+```
+node run-local.js
+```
 
 ### Setup an Interaction Widget integration in Genesys Cloud
 1. Login to your Genesys Cloud organization and add a new **Integration**.
@@ -92,9 +88,13 @@ The Messaging Assistant integration has the following stages:
    
    Use the GitHub URL to run the hosted repo or use the localhost URL to test on your local computer.
 
-   <pre class="language-nohighlight"><code class="language-nohighlight">https://genesyscloudblueprints.github.io/chat-assistant-blueprint/?conversationid=&#123;&#123;gcConversationId&#125&#125;&language=&#123;&#123;gcLangTag&#125&#125;&environment=&#123;&#123;gcTargetEnv&#125&#125;</code></pre>
+```
+https://genesyscloudblueprints.github.io/chat-assistant-blueprint/?conversationid={{gcConversationId}}&language={{gcLangTag}}&environment={{gcTargetEnv}}
+```
 
-   <pre class="language-nohighlight"><code class="language-nohighlight">https://localhost/?conversationid=&#123;&#123;gcConversationId&#125&#125;&language=&#123;&#123;gcLangTag&#125&#125;&environment=&#123;&#123;gcTargetEnv&#125&#125;</code></pre>
+```
+https://localhost/?conversationid={{gcConversationId}}&language={{gcLangTag}}&environment={{gcTargetEnv}}
+```
 
    Select a group for filtering user acces to the widget.
 
@@ -106,22 +106,22 @@ The Messaging Assistant integration has the following stages:
    
 5. Go to **Advanced** Configuration and enter this in the text area:
 
-   ```json
-   {
-     "lifecycle": {
-       "ephemeral": false,
-       "hooks": {
-         "stop": true,
-         "blur": true,
-         "focus": true,
-         "bootstrap": true
-       }
-     },
-     "monochromicIcon": {
-       "vector": "https://raw.githubusercontent.com/GenesysCloudBlueprints/chat-assistant-blueprint/master/blueprint/images/Chatbot.svg"
-     }
+```json
+{
+   "lifecycle": {
+      "ephemeral": false,
+      "hooks": {
+      "stop": true,
+      "blur": true,
+      "focus": true,
+      "bootstrap": true
+      }
+   },
+   "monochromicIcon": {
+      "vector": "https://raw.githubusercontent.com/GenesysCloudBlueprints/chat-assistant-blueprint/master/blueprint/images/Chatbot.svg"
    }
-   ```
+}
+```
 
 6. **Save** and **Activate** the integration.
 
