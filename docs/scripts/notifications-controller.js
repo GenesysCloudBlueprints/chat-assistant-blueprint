@@ -57,5 +57,18 @@ export default {
             subscriptionMap[topic] = callback;
             console.log(`Added subscription to ${topic}`);
         });
+    },
+
+    /**
+     * Close the notifications websocket. Called during widget teardown (the
+     * Client Apps `stop` lifecycle event) so the socket does not linger.
+     */
+    closeChannel(){
+        if (ws) {
+            ws.onmessage = null;
+            ws.close();
+            ws = null;
+            console.log('Closed Notifications Channel websocket.');
+        }
     }
 }
