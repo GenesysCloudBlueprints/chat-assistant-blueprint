@@ -54,17 +54,24 @@ The Messaging Assistant integration has the following stages:
 
 1. Go to the [repository](https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint) and clone it to your machine.
 
-### Create a Code Authorization / PKCE OAuth Grant for Genesys Cloud
+### Create a Code Authorization (PKCE) OAuth Grant for Genesys Cloud
 
-1. Login to your Genesys Cloud organization and create a new OAuth API (Code Authorization / PKCE). [Create an OAuth Client](https://help.mypurecloud.com/articles/create-an-oauth-client/)
-2. Assign your hosted site to the Authorized redirect URIs.
-3. In your local blueprint repository, open the [config.js](https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint/blob/master/docs/scripts/config.js) file. Add the client ID from your OAuth client and specify the region where your Genesys Cloud organization is located, for example, `mypurecloud.ie` or `mypurecloud.com.au`.
+This blueprint authenticates entirely in the browser using the **Authorization Code grant with PKCE** and **pop-out authentication**. The login page opens in a separate browser window rather than inside the widget's iframe, and no client secret is used or stored in the app.
 
   :::primary
-  **Important**: By default, the integration works with Genesys Cloud environments located in Americas (US East): `mypurecloud.com`. If your Genesys Cloud organization is located in another region, then in the **Initial Setup** section of the `main.js` file, add `client.setEnvironment('{your Genesys Cloud environment}')`. For example, if your Genesys Cloud organization is located in Asia Pacific (Sydney), then add `client.setEnvironment('mypurecloud.com.au')`. For more information about the regions, see [Platform API](https://developer.genesys.cloud/api/rest/ "Opens the Platform API page").
+  **Why PKCE and pop-out?** Genesys Cloud is [deprecating the ability to embed the login web application within an iframe](https://help.genesys.cloud/announcements/genesys-cloud/deprecation-ability-to-embed-the-genesys-cloud-login-web-application-within-an-iframe/), so the login must open in a pop-out window. Genesys is also deprecating the [Token Implicit Grant (Browser)](https://developer.genesys.cloud/authorization/platform-auth/use-pkce) option and recommends the Authorization Code grant with PKCE for client-side apps.
   :::
 
-4. Create an .env file in the directory folder and provide values for the following variables: `GENESYS_CLIENT_ID`, `GENESYS_CLIENT_SECRET`, and `GENESYS_REGION`.
+1. Login to your Genesys Cloud organization and create a new OAuth client with the **Code Authorization** grant type. [Create an OAuth Client](https://help.mypurecloud.com/articles/create-an-oauth-client/)
+2. Do **not** use the client secret in the browser app. PKCE replaces the secret for public (client-side) clients.
+3. Add your redirect URI to the **Authorized redirect URIs** list. This app derives the redirect URI at runtime from wherever it is served, using the path `oauth/callback.html`. Register the value that matches your deployment, for example:
+   - Local testing: `https://localhost:3443/oauth/callback.html`
+   - Hosted (GitHub Pages): `https://<your-github-user>.github.io/<your-repo>/oauth/callback.html`
+4. In your local blueprint repository, open the [config.js](https://github.com/GenesysCloudBlueprints/chat-assistant-blueprint/blob/master/docs/scripts/config.js) file. Add the client ID from your OAuth client and specify the region where your Genesys Cloud organization is located, for example, `mypurecloud.ie` or `mypurecloud.com.au`.
+
+  :::primary
+  **Important**: By default, the integration works with Genesys Cloud environments located in Americas (US East): `mypurecloud.com`. If your Genesys Cloud organization is located in another region, set the `region` value in `config.js` to your Genesys Cloud environment. For example, if your organization is located in Asia Pacific (Sydney), set `region: 'mypurecloud.com.au'`. For more information about the regions, see [Platform API](https://developer.genesys.cloud/api/rest/ "Opens the Platform API page").
+  :::
 
 
 ### Run Locally
@@ -92,12 +99,16 @@ node run-local.js
    Use the GitHub URL to run the hosted repo or use the localhost URL to test on your local computer.
 
 ```
-https://genesyscloudblueprints.github.io/chat-assistant-blueprint/?conversationid={{gcConversationId}}&language={{gcLangTag}}&environment={{gcTargetEnv}}
+https://genesyscloudblueprints.github.io/chat-assistant-blueprint/?conversationid={{gcConversationId}}&language={{gcLangTag}}&gcHostOrigin={{gcHostOrigin}}&gcTargetEnv={{gcTargetEnv}}
 ```
 
 ```
-https://localhost/?conversationid={{gcConversationId}}&language={{gcLangTag}}&environment={{gcTargetEnv}}
+https://localhost/?conversationid={{gcConversationId}}&language={{gcLangTag}}&gcHostOrigin={{gcHostOrigin}}&gcTargetEnv={{gcTargetEnv}}
 ```
+
+   The `gcHostOrigin` and `gcTargetEnv` parameters let the Client Apps SDK determine the Genesys Cloud environment at runtime. They are used by the app's lifecycle handshake with the Interaction Widget host.
+   
+   Add `allow-popups` to the **Iframe Sandbox Options**. It lets the widget open the pop-out login window. Without it, the login popup is blocked. The first time an agent opens the assistant they authenticate in the pop-out window; the browser may prompt to allow popups for the Genesys Cloud site.
 
    Select a group for filtering user access to the widget.
 
